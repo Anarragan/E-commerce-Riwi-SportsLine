@@ -1,5 +1,6 @@
 
 export class UserRoleEnum {
   static ADMIN = 'admin';
-  static CUSTOMER = 'user';
+  static SELLER = 'seller';
+  static CUSTOMER = 'customer';
 }

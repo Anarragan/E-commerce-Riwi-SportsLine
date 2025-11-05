@@ -16,7 +16,7 @@ import { DataSource } from 'typeorm';
         username: config.get<string>('DB_USER'),
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
-        synchronize: true,
+        synchronize: false,
         autoLoadEntities: true,
         logging: true,
         ssl: {
