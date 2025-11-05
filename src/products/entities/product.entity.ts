@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Category } from "src/categories/entities/category.entity";
+import { OrderItem } from "src/order-items/entities/order-item.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 
 @Entity('products')
 export class Product {
@@ -15,12 +17,19 @@ export class Product {
   stock: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  value: string;
+  value: number;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  // relations
+  @ManyToOne(() => Category, category => category.products)
+  category: Category;
+
+  @OneToMany(() => OrderItem, orderItem => orderItem.product_id)
+  orderItems: OrderItem[];
 
 }

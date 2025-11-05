@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { Order } from "src/orders/entities/order.entity";
+import { Product } from "src/products/entities/product.entity";
 
 @Entity('order_items')
 export class OrderItem {
@@ -19,6 +20,9 @@ export class OrderItem {
   updatedAt: Date;
   
   // relations
-  @ManyToOne(() => Order, order => order.items)
+  @ManyToOne(() => Order)
   order_id: Order;
+
+  @ManyToOne(() => Product, product => product.orderItems)
+  product_id: Product;
 }

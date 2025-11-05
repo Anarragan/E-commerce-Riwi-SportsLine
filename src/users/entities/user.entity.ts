@@ -1,6 +1,7 @@
 import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, Unique } from "typeorm";
 import { Exclude } from "class-transformer";
 import { UserRoleEnum } from "src/enums/user.enum";
+import { Order } from "src/orders/entities/order.entity";
 
 @Entity('users')
 export class User {
@@ -26,4 +27,7 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
+  // relations
+  @OneToMany(() => Order, order => order.user_id)
+  orders: Order[];
 }
