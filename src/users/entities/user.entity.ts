@@ -1,5 +1,9 @@
-import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, Unique } from "typeorm";
+import { Exclude } from "class-transformer";
+import { UserRoleEnum } from "src/enums/user.enum";
 
+@Entity('users')
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -7,11 +11,12 @@ export class User {
   @Column({ length: 100 })
   email: string;
 
-  @Column()
+  @Exclude()
+  @Column({ select: false })
   password: string;
 
-  @Column()
-  role: string;
+  @Column({ type: 'enum', enum: UserRoleEnum })
+  role: UserRoleEnum;
 
   @CreateDateColumn()
   createdAt: Date;
