@@ -5,7 +5,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Up
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  id: string;
 
   @Column({ unique: true })
   title: string;
@@ -17,7 +17,7 @@ export class Product {
   stock: number;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
-  value: number;
+  value: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -27,9 +27,9 @@ export class Product {
 
   // relations
   @ManyToOne(() => Category, category => category.products)
-  category: Category;
+  category_id: Category;
 
   @OneToMany(() => OrderItem, orderItem => orderItem.product_id)
-  orderItems: OrderItem[];
+  orderItems_id: OrderItem[];
 
 }

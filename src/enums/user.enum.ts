@@ -1,6 +1,6 @@
 
-export class UserRoleEnum {
-  static ADMIN = 'admin';
-  static SELLER = 'seller';
-  static CUSTOMER = 'customer';
+export enum UserRoleEnum {
+  ADMIN = 'admin',
+  SELLER = 'seller',
+  CUSTOMER = 'customer',
 }

@@ -5,7 +5,7 @@ import { Product } from "src/products/entities/product.entity";
 @Entity('order_items')
 export class OrderItem {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  id: string;
 
   @Column()
   quantity: number;
@@ -20,9 +20,9 @@ export class OrderItem {
   updatedAt: Date;
   
   // relations
-  @ManyToOne(() => Order)
+  @ManyToOne(() => Order , order => order.orderItems)
   order_id: Order;
 
-  @ManyToOne(() => Product, product => product.orderItems)
+  @ManyToOne(() => Product, product => product.orderItems_id)
   product_id: Product;
 }

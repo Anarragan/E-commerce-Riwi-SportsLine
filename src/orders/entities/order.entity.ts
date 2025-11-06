@@ -11,7 +11,7 @@ export class Order {
   status: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-  total: number;
+  total: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
@@ -23,6 +23,6 @@ export class Order {
   @ManyToOne(() => User, user => user.orders)
   user_id: User;
 
-  @OneToMany(() => OrderItem, 'order', { cascade: true })
+  @OneToMany(() => OrderItem, orderItem => orderItem.order_id, { cascade: true })
   orderItems: OrderItem[];
 }

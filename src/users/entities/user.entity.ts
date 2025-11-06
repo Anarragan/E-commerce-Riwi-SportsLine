@@ -6,7 +6,7 @@ import { Order } from "src/orders/entities/order.entity";
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn({type: 'bigint'})
-  id: number;
+  id: string;
 
   @Column({ length: 100 })
   name: string;
