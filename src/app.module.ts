@@ -1,13 +1,30 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './config/db.config';
-import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { CategoriesModule } from './categories/categories.module';
 import { OrderItemsModule } from './order-items/order-items.module';
+import * as Joi from 'joi';
 
 
 @Module({
-  imports: [ConfigModule, DatabaseConfigModule, ProductsModule, OrdersModule, CategoriesModule, OrderItemsModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string()
+          .valid('development', 'production', 'test', 'provision')
+          .default('development'),
+        PORT: Joi.number().default(3000),
+        // add db url in the future if needed
+      }),
+    }),
+
+    DatabaseConfigModule, 
+    OrdersModule, 
+    CategoriesModule, 
+    OrderItemsModule
+  ],
 })
+
 export class AppModule {}

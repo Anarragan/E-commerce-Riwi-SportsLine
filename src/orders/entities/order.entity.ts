@@ -5,7 +5,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Up
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  id: string;
 
   @Column({ length: 20 })
   status: string;
@@ -21,8 +21,8 @@ export class Order {
 
   // relations
   @ManyToOne(() => User, user => user.orders)
-  user_id: User;
+  user: User;
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.order_id, { cascade: true })
+  @OneToMany(() => OrderItem, orderItem => orderItem.order, { cascade: true })
   orderItems: OrderItem[];
 }

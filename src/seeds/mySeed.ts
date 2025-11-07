@@ -35,11 +35,11 @@ async function run() {
         ]);
 
         const products = await productRepo.save([
-            productRepo.create({ title: 'Swimming Goggles', description: 'Anti-fog swimming goggles', value: '29.99', stock: 100, category_id: categories[0] }),
-            productRepo.create({ title: 'Football', description: 'Official size and weight football', value: '19.99', stock: 150, category_id: categories[1] }),
-            productRepo.create({ title: 'Running Shoes', description: 'Comfortable running shoes', value: '79.99', stock: 80, category_id: categories[2] }),
-            productRepo.create({ title: 'Basketball Jersey', description: 'Breathable basketball jersey', value: '49.99', stock: 60, category_id: categories[3] }),
-            productRepo.create({ title: 'Tennis Racket', description: 'Lightweight tennis racket', value: '89.99', stock: 40, category_id: categories[4] }),
+            productRepo.create({ title: 'Swimming Goggles', description: 'Anti-fog swimming goggles', value: '29.99', stock: 100, category: categories[0] }),
+            productRepo.create({ title: 'Football', description: 'Official size and weight football', value: '19.99', stock: 150, category: categories[1] }),
+            productRepo.create({ title: 'Running Shoes', description: 'Comfortable running shoes', value: '79.99', stock: 80, category: categories[2] }),
+            productRepo.create({ title: 'Basketball Jersey', description: 'Breathable basketball jersey', value: '49.99', stock: 60, category: categories[3] }),
+            productRepo.create({ title: 'Tennis Racket', description: 'Lightweight tennis racket', value: '89.99', stock: 40, category: categories[4] }),
         ]);
 
         const users = await userRepo.save([
@@ -51,19 +51,19 @@ async function run() {
         ]);
 
         const orders = await orderRepo.save([
-            orderRepo.create({ status: 'completed', user_id: users[2], total: '49.98' }),
-            orderRepo.create({ status: 'completed', user_id: users[3], total: '79.99' }),
-            orderRepo.create({ status: 'completed', user_id: users[4], total: '89.99' }), 
-            orderRepo.create({ status: 'pending', user_id: users[2], total: '19.99' }),
-            orderRepo.create({ status: 'pending', user_id: users[3], total: '29.99' }),
+            orderRepo.create({ status: 'completed', user: users[2], total: '49.98' }),
+            orderRepo.create({ status: 'completed', user: users[3], total: '79.99' }),
+            orderRepo.create({ status: 'completed', user: users[4], total: '89.99' }), 
+            orderRepo.create({ status: 'pending', user: users[2], total: '19.99' }),
+            orderRepo.create({ status: 'pending', user: users[3], total: '29.99' }),
         ]);
 
         await orderItemRepo.save([
-            orderItemRepo.create({ order_id: orders[0], product_id: products[0], quantity: 1, price: products[0].value }),
-            orderItemRepo.create({ order_id: orders[0], product_id: products[1], quantity: 1, price: products[1].value }),
-            orderItemRepo.create({ order_id: orders[1], product_id: products[2], quantity: 1, price: products[2].value }),
-            orderItemRepo.create({ order_id: orders[2], product_id: products[4], quantity: 1, price: products[4].value }),
-            orderItemRepo.create({ order_id: orders[3], product_id: products[1], quantity: 1, price: products[1].value }),
+            orderItemRepo.create({ order: orders[0], product: products[0], quantity: 1, price: products[0].value }),
+            orderItemRepo.create({ order: orders[0], product: products[1], quantity: 1, price: products[1].value }),
+            orderItemRepo.create({ order: orders[1], product: products[2], quantity: 1, price: products[2].value }),
+            orderItemRepo.create({ order: orders[2], product: products[4], quantity: 1, price: products[4].value }),
+            orderItemRepo.create({ order: orders[3], product: products[1], quantity: 1, price: products[1].value }),
         ]);
 
         console.log('Seeding completed successfully.');

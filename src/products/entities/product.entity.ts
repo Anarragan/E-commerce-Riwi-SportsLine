@@ -27,9 +27,8 @@ export class Product {
 
   // relations
   @ManyToOne(() => Category, category => category.products)
-  category_id: Category;
+  category: Category;
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.product_id)
-  orderItems_id: OrderItem[];
-
+  @OneToMany(() => OrderItem, orderItem => orderItem.product)
+  orderItems: OrderItem[];
 }

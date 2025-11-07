@@ -13,6 +13,6 @@ export class Category {
   description: string;
 
   // relations
-  @OneToMany(() => Product, product => product.category_id)
+  @OneToMany(() => Product, product => product.category)
   products: Product[];
 }

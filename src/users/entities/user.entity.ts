@@ -28,6 +28,6 @@ export class User {
   updatedAt: Date;
 
   // relations
-  @OneToMany(() => Order, order => order.user_id)
+  @OneToMany(() => Order, order => order.user)
   orders: Order[];
 }

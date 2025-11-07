@@ -21,8 +21,8 @@ export class OrderItem {
   
   // relations
   @ManyToOne(() => Order , order => order.orderItems)
-  order_id: Order;
+  order: Order;
 
-  @ManyToOne(() => Product, product => product.orderItems_id)
-  product_id: Product;
+  @ManyToOne(() => Product, product => product.orderItems)
+  product: Product;
 }
