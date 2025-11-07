@@ -5,6 +5,14 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { ClientModule } from './client/client.module';
+import { ProductModule } from './product/product.module';
+import { OrderModule } from './order/order.module';
+import { OrderItemModule } from './order_item/order_item.module';
+import { Client } from './client/entities/client.entity';
+import { Order } from './order/entities/order.entity';
+import { OrderItem } from './order_item/entities/order_item.entity';
+import { Product } from './product/entities/product.entity';
 
 @Module({
   imports: [
@@ -19,11 +27,15 @@ import { User } from './user/entities/user.entity';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User],
+      entities: [User, Client, Order, OrderItem, Product],
       synchronize: true,
 
     }),
-    UserModule
+    UserModule,
+    ClientModule,
+    ProductModule,
+    OrderModule,
+    OrderItemModule
   ],
   controllers: [AppController],
   providers: [AppService],
