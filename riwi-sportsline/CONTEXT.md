@@ -16,7 +16,7 @@ El sistema debe ser escalable, mantenible y seguro, con soporte para usuarios, c
 
 ### ✅ Semana 2
 - **Entidades migradas a TypeORM**:
-  - `User`: con roles (`admin`, `analyst`), relación con `Order`.
+  - `User`: con roles (`admin`, `analyst`, `client`), relación con `Order`.
   - `Client`: relación con `Order`.
   - `Product`: con categoría, stock (`availableAmount`), precio unitario.
   - `Order`: relación con `User` y `Client`, contiene `OrderItems`.
@@ -52,16 +52,44 @@ El sistema debe ser escalable, mantenible y seguro, con soporte para usuarios, c
 
 ---
 
-## 📅 Próximos pasos (Semana 3)
-- Generar recursos con `nest g resource` para cada entidad (`user`, `client`, `product`, `order`, `order-item`).
-- Conectar servicios a repositorios TypeORM.
-- Implementar DTOs y validaciones (`class-validator`).
-- Exponer endpoints REST y probar en Swagger/Postman.
-- Documentar endpoints y flujo de datos.
+### ✅ Semana 3
+- **Recursos generados con `nest g resource`**:
+  - `User`: CRUD completo con DTOs (`CreateUserDto`, `UpdateUserDto`), validaciones (`class-validator`) y endpoints REST.
+  - `Product`: CRUD completo con validaciones de stock y precio.
+  - `Client`: CRUD completo para gestión de clientes.
+  - `Order`: CRUD con relaciones hacia `User` y `Client`, incluye estado (`pending`, `completed`, `cancelled`) y totalAmount.
+  - `OrderItem`: CRUD que conecta `Order` y `Product`, con cantidad y precio.
+
+- **Servicios conectados a repositorios TypeORM**:
+  - Uso de `@InjectRepository` en cada servicio.
+  - Métodos CRUD (`create`, `findAll`, `findOne`, `update`, `remove`) implementados.
+  - Relaciones cargadas con `relations` en `findAll` y `findOne`.
+
+- **Controladores REST**:
+  - Endpoints expuestos en plural (`/users`, `/products`, `/clients`, `/orders`, `/order-items`).
+  - Uso de `ParseIntPipe` para tipado seguro en parámetros `id`.
+  - Validaciones activas en Swagger/Postman.
+
+- **Validación en Swagger/Postman**:
+  - `POST /users` → creación de usuarios con roles.
+  - `POST /products` → creación de productos con stock y precio.
+  - `POST /clients` → creación de clientes.
+  - `POST /orders` → creación de órdenes asociadas a usuarios y clientes.
+  - `POST /order-items` → asociación de productos a órdenes.
+  - `GET` endpoints devuelven datos con relaciones completas.
+
+---
+
+## 📅 Próximos pasos (Semana 4 en adelante)
+- Implementar **autenticación y autorización** (JWT, roles).
+- Añadir **validaciones avanzadas** en servicios (ej. stock disponible antes de crear `OrderItem`).
+- Documentar endpoints en README y Swagger.
+- Optimizar consultas con `QueryBuilder` para reportes (ventas por cliente, productos más vendidos).
+- Añadir pruebas unitarias y de integración.
 
 ---
 
 ## 📝 Notas
 - Los seeders son **idempotentes** gracias al `TRUNCATE ... CASCADE`, reinician IDs en cada corrida.
-- Documentar en README cómo correr `npm run seed` y validar datos.
-- La base de datos ya está lista para ser consumida por los servicios y controladores que se generarán en Semana 3.
+- La base de datos ya está lista para ser consumida por los servicios y controladores.
+- Los recursos CRUD de Semana 3 permiten validar el flujo completo de datos desde Swagger/Postman.
