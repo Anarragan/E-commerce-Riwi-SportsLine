@@ -12,8 +12,8 @@ export class OrderItemsService {
   create(createOrderItemDto: CreateOrderItemDto) {
     const orderItem = this.orderItemRepository.create({
       ...createOrderItemDto,
-      order: { id: createOrderItemDto.order },
-      product: { id: createOrderItemDto.product },
+      order: { id: createOrderItemDto.orderId },
+      product: { id: createOrderItemDto.productId },
     } as any);
     return this.orderItemRepository.save(orderItem);
   }

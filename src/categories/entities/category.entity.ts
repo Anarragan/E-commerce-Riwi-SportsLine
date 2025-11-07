@@ -3,8 +3,8 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 
 @Entity('categories')
 export class Category {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
+  @PrimaryGeneratedColumn()
+  id: string;
 
   @Column({ unique: true })
   name: string;

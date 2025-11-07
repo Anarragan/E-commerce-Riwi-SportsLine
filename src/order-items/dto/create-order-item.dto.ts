@@ -1,24 +1,22 @@
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 import { Type } from 'class-transformer'
-import { Order } from 'src/orders/entities/order.entity';
-import { Product } from 'src/products/entities/product.entity';
 
 export class CreateOrderItemDto {
-    @IsInt()
-    @IsNotEmpty()
+    @IsInt({ message: 'The quantity must be an integer' })
+    @IsNotEmpty({ message: 'The quantity is required' })
     quantity: number;
 
-    @IsString()
-    @IsNotEmpty()
+    @IsString({ message: 'The price must be a string' })
+    @IsNotEmpty({ message: 'The price is required' })
     price: string;
 
     @Type(() => Number)
-    @IsInt()
-    @IsNotEmpty()
-    order: number;
+    @IsInt({ message: 'The orderItem ID must be an integer' })
+    @IsNotEmpty({ message: 'The orderItem ID is required' })
+    orderItemId: number;
 
     @Type(() => Number)
-    @IsInt()
-    @IsNotEmpty()
-    product: number;
+    @IsInt({ message: 'The product ID must be an integer' })
+    @IsNotEmpty({ message: 'The product ID is required' })
+    productId: number;
 }
