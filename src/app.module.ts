@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './config/db.config';
 import { OrdersModule } from './orders/orders.module';
-import { CategoriesModule } from './categories/categories.module';
 import { OrderItemsModule } from './order-items/order-items.module';
+import { CustomersModule } from './customers/customers.module';
 import * as Joi from 'joi';
-
 
 @Module({
   imports: [
@@ -20,10 +19,10 @@ import * as Joi from 'joi';
       }),
     }),
 
-    DatabaseConfigModule, 
-    OrdersModule, 
-    CategoriesModule, 
-    OrderItemsModule
+    DatabaseConfigModule,
+    OrdersModule,
+    OrderItemsModule,
+    CustomersModule
   ],
 })
 

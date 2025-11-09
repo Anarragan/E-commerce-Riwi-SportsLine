@@ -1,33 +1,41 @@
-import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, Unique } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, Unique, OneToOne } from "typeorm";
 import { Exclude } from "class-transformer";
-import { UserRoleEnum } from "src/enums/user.enum";
 import { Order } from "src/orders/entities/order.entity";
+import { Customer } from "src/customers/entities/customer.entity";
+
+enum UserRoleEnum {
+  ADMIN = 'ADMIN',
+  CUSTOMER = 'CUSTOMER',
+}
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn({type: 'bigint'})
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: string;
 
   @Column({ length: 100 })
   name: string;
 
-  @Column({ length: 150, unique: true })
+  @Column({ unique: true })
   email: string;
 
+  @Column()
   @Exclude()
-  @Column({ select: false, length: 255 })
   password: string;
 
   @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.CUSTOMER })
   role: UserRoleEnum;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn()
   updatedAt: Date;
 
-  // relations
+  // Relations
+  @OneToOne(() => Customer, customer => customer.user)
+  customer: Customer;
+
   @OneToMany(() => Order, order => order.user)
   orders: Order[];
 }

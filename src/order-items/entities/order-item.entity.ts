@@ -13,14 +13,7 @@ export class OrderItem {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  updatedAt: Date;
-  
-  // relations
-  @ManyToOne(() => Order , order => order.orderItems)
+  @ManyToOne(() => Order, order => order.orderItems)
   order: Order;
 
   @ManyToOne(() => Product, product => product.orderItems)

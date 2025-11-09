@@ -13,11 +13,11 @@ export class ProductsService {
   ) {}
 
   create(createProductDto: CreateProductDto) {
-    const products = this.productRepository.create({
+    const product = this.productRepository.create({
       ...createProductDto,
-      category: { id: createProductDto.category_id },
+      price: String(createProductDto.price),
     });
-    return this.productRepository.save(products);
+    return this.productRepository.save(product);
   }
 
   findAll() {
@@ -29,8 +29,11 @@ export class ProductsService {
   }
 
   update(id: string, updateProductDto: UpdateProductDto) {
-    const productUpdate = this.productRepository.update( id, updateProductDto);
-    return productUpdate;
+    const updateData = { ...updateProductDto } as any;
+    if (updateData.price !== undefined) {
+      updateData.price = String(updateData.price);
+    }
+    return this.productRepository.update(id, updateData);
   }
 
   remove(id: string) {
