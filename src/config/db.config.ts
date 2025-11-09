@@ -2,7 +2,7 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm'; 
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { DataSource } from 'typeorm';
-
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -19,6 +19,7 @@ import { DataSource } from 'typeorm';
         synchronize: true,
         autoLoadEntities: true,
         logging: true,
+        entities: [path.join(__dirname, '..', '**', '*.entity.{ts,js}')],
         ssl: {
           rejectUnauthorized: false,
         },
