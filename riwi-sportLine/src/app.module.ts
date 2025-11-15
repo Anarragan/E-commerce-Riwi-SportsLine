@@ -1,0 +1,34 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import appConfig from './config/app.config';
+import databaseConfig from './config/database.config';
+import { UsersModule } from './modules/users/users.module';
+import { validateEnv } from './config/validate.schema';
+import { getMongoConfig } from './database/ormconfig';
+import { ProductsModule } from './modules/products/products.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { OrderItemsModule } from './modules/order-items/order-items.module';
+import { CustomersModule } from './modules/customers/customers.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfig, databaseConfig],
+      validate: (config) => validateEnv(config),
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: getMongoConfig,
+    }),
+    UsersModule,
+    ProductsModule,
+    OrdersModule,
+    OrderItemsModule,
+    CustomersModule
+  ],
+})
+
+export class AppModule {}
