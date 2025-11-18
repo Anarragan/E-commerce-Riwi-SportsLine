@@ -9,8 +9,11 @@ import { Customer } from 'src/modules/customers/entities/customer.entity';
 export const getMongoConfig = async (
   configService: ConfigService,
 ): Promise<TypeOrmModuleOptions> => ({
-    type: 'mongodb',
-    url: configService.get<string>('DB_URI'),
+    type: 'postgres',
+    host: configService.get<string>('DB_HOST'),
+    port: configService.get<number>('DB_PORT'),
+    username: configService.get<string>('DB_USERNAME'),
+    password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_NAME'),
     entities: [User, Product, Order, OrderItem, Customer],
     synchronize: true,

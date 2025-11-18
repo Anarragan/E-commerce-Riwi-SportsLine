@@ -1,6 +1,7 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, ObjectIdColumn } from "typeorm";
+import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Customer } from "src/modules/customers/entities/customer.entity";
+import { Order } from "src/modules/orders/entities/order.entity";
 import { Exclude } from "class-transformer";
-import { ObjectId } from "mongodb";
 
 export enum UserRoleEnum {
   ADMIN = 'ADMIN',
@@ -9,8 +10,8 @@ export enum UserRoleEnum {
 
 @Entity('users')
 export class User {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: string;
 
   @Column({ length: 100 })
   name: string;
@@ -32,10 +33,10 @@ export class User {
   updatedAt: Date;
 
   // Relations
-  @Column()
-  customerId?: ObjectId;
+  @OneToMany(() => Customer, (customer) => customer.id)
+  customer?: string;
 
-  @Column({ default: [] })
-  orderIds: ObjectId[];
+  @OneToMany(() => Order, (order) => order.id)
+  order?: string[];
 
 }
