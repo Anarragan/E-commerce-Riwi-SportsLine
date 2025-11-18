@@ -12,7 +12,7 @@ export class Product {
   @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ type: 'numeric' })
   price: number;
 
   @Column({ default: 0 })
@@ -25,6 +25,6 @@ export class Product {
   updatedAt: Date;
 
   // Relations
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.id)
-  orderItems: string[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
+  orderItems: OrderItem[];
 }

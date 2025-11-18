@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
-import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class CustomersService {
@@ -13,8 +12,8 @@ export class CustomersService {
   create(createCustomerDto: CreateCustomerDto) {
     const customer = this.customerRepository.create({
       ...createCustomerDto,
-      userId: createCustomerDto.userId ? createCustomerDto.userId : undefined,
-  });
+      user: { id: createCustomerDto.userId },
+    });
     return this.customerRepository.save(customer);
   }
 
@@ -24,19 +23,21 @@ export class CustomersService {
 
   findOne(id: string) {
     return this.customerRepository.findOne({ 
-      where: { id: new ObjectId(id) } });
+      where: { id } });
   }
 
   async update(id: string, updateCustomerDto: UpdateCustomerDto) {
-    const updateData = { ...updateCustomerDto } as any;
-    if (updateData.userId !== undefined) {
-      updateData.userId = new ObjectId(updateData.userId);
+    const updateCustomer = await this.customerRepository.preload({
+      id,
+      ...updateCustomerDto,
+    });
+    if (!updateCustomer) {
+      throw new NotFoundException(`Customer with id ${id} not found`);
     }
-    await this.customerRepository.update({ id: new ObjectId(id) }, updateData);
-    return this.findOne(id);
+    return this.customerRepository.save(updateCustomer);
   }
 
   remove(id: string) {
-    return this.customerRepository.delete({ id: new ObjectId(id) });
+    return this.customerRepository.delete({ id });
   }
 }

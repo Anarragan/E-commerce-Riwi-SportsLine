@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderItemDto } from './dto/create-order-item.dto';
 import { UpdateOrderItemDto } from './dto/update-order-item.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderItem } from './entities/order-item.entity';
-import { ObjectId } from 'mongodb';
 
 @Injectable()
 export class OrderItemsService {
@@ -12,13 +11,9 @@ export class OrderItemsService {
 
   create(createOrderItemDto: CreateOrderItemDto) {
     const orderItem = this.orderItemRepository.create({
-      quantity: createOrderItemDto.quantity,
-      price:
-        typeof createOrderItemDto.price === 'string'
-          ? parseFloat(createOrderItemDto.price)
-          : createOrderItemDto.price,
-      orderId: new ObjectId(createOrderItemDto.orderId),
-      productId: new ObjectId(createOrderItemDto.productId),
+      ...createOrderItemDto,
+      order: { id: createOrderItemDto.orderId },
+      product: { id: createOrderItemDto.productId },
     });
     return this.orderItemRepository.save(orderItem);
   }
@@ -28,24 +23,25 @@ export class OrderItemsService {
   }
 
   findOne(id: string) {
-    return this.orderItemRepository.findOne({ 
-      where: { id: new ObjectId(id) }
+    return this.orderItemRepository.findOne({
+      where: { id },
     });
   }
 
   async update(id: string, updateOrderItemDto: UpdateOrderItemDto) {
-    const updateData: any = { ...updateOrderItemDto };
-    if (updateData.orderId) {
-      updateData.orderId = new ObjectId(updateData.orderId);
+    const orderItem = await this.orderItemRepository.preload({
+      id,
+      ...updateOrderItemDto,
+      order: { id: updateOrderItemDto.orderId },
+      product: { id: updateOrderItemDto.productId },
+    });
+    if (!orderItem) {
+      throw new NotFoundException(`OrderItem with id ${id} not found`);
     }
-    if (updateData.productId) {
-      updateData.productId = new ObjectId(updateData.productId);
-    }
-    await this.orderItemRepository.update({ id: new ObjectId(id) }, updateData);
-    return this.findOne(id);
+    return this.orderItemRepository.save(orderItem);
   }
-  
+
   remove(id: string) {
-    return this.orderItemRepository.delete({ id: new ObjectId(id) });
+    return this.orderItemRepository.delete({ id });
   }
 }

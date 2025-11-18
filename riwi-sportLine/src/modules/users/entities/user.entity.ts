@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne } from "typeorm";
 import { Customer } from "src/modules/customers/entities/customer.entity";
 import { Order } from "src/modules/orders/entities/order.entity";
 import { Exclude } from "class-transformer";
@@ -33,10 +33,10 @@ export class User {
   updatedAt: Date;
 
   // Relations
-  @OneToMany(() => Customer, (customer) => customer.id)
-  customer?: string;
+  @OneToOne(() => Customer, (customer) => customer.user)
+  customer?: Customer;
 
-  @OneToMany(() => Order, (order) => order.id)
-  order?: string[];
+  @OneToMany(() => Order, (order) => order.user)
+  orders?: Order[];
 
 }

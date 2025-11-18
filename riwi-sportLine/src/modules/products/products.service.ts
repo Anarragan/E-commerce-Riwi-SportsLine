@@ -4,7 +4,6 @@ import { Repository } from "typeorm";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { Product } from "./entities/product.entity";
-import { ObjectId } from "mongodb";
 
 @Injectable()
 export class ProductsService {
@@ -27,7 +26,7 @@ export class ProductsService {
 
   findOne(id: string) {
     return this.productRepository.findOne({ 
-      where: {id: new ObjectId(id) }
+      where: {id}
     });
   }
 
@@ -36,14 +35,11 @@ export class ProductsService {
     if (updateData.price !== undefined) {
       updateData.price = (updateData.price);
     }
-    await this.productRepository.update({
-      id: new ObjectId(id)}, 
-      updateData,
-    );
+    await this.productRepository.update({ id }, updateData);
     return this.findOne(id);
   }
 
   remove(id: string) {
-    return this.productRepository.delete({ id: new ObjectId(id) });
+    return this.productRepository.delete({ id });
   }
 }

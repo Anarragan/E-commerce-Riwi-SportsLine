@@ -1,30 +1,36 @@
 import { 
   IsOptional, 
-  IsString,
   IsNotEmpty,
   IsEnum,
   IsArray,
+  IsNumber,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { OrderStatusEnum } from '../entities/order.entity';
+import { CreateOrderItemDto } from '../../order-items/dto/create-order-item.dto';
+
 
 export class CreateOrderDto {
   @IsEnum(OrderStatusEnum)
   @IsOptional()
   status?: OrderStatusEnum;
 
-  @IsString({ message: 'El userId debe ser una cadena de texto' })
+  @IsNumber({}, {message: 'El userId debe ser un número' })
   @IsNotEmpty({ message: 'El userId es obligatorio' })
-  userId: string;
+  userId: number;
 
-  @IsString({ message: 'El customerId debe ser una cadena de texto' })
+  @IsNumber({}, { message: 'El customerId debe ser un número' })
   @IsNotEmpty({ message: 'El customerId es obligatorio' })
-  customerId: string;
+  customerId: number;
 
   @IsOptional()
-  @IsString({ message: 'El total debe ser una cadena de texto' })
-  total?: string;
+  @IsNumber({}, { message: 'El total debe ser un número' })
+  total?: number;
 
   @IsArray()
-  @IsString({ each: true, message: 'Cada item del pedido debe ser una cadena de texto' })
-  orderItemsIds: string[];
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrderItemDto)
+  orderItems: CreateOrderItemDto[];
+
 }
