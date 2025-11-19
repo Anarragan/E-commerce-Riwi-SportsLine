@@ -11,6 +11,7 @@ import { OrderItemsModule } from './modules/order-items/order-items.module';
 import { CustomersModule } from './modules/customers/customers.module';
 import { AuditMiddleware } from './common/middleware/audit.middleware';
 import { MiddlewareConsumer, NestModule, Module } from '@nestjs/common';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { MiddlewareConsumer, NestModule, Module } from '@nestjs/common';
     ProductsModule,
     OrdersModule,
     OrderItemsModule,
-    CustomersModule
+    CustomersModule,
+    AuthModule
   ],
 })
 
