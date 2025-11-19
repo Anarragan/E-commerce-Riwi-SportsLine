@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../app.module';
+import { AppModule } from '../../app.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User, UserRoleEnum } from '../modules/users/entities/user.entity';
-import { Customer } from '../modules/customers/entities/customer.entity';
-import { Product } from '../modules/products/entities/product.entity';
-import { Order, OrderStatusEnum } from '../modules/orders/entities/order.entity';
-import { OrderItem } from '../modules/order-items/entities/order-item.entity';
+import { User, UserRoleEnum } from '../../modules/users/entities/user.entity';
+import { Customer } from '../../modules/customers/entities/customer.entity';
+import { Product } from '../../modules/products/entities/product.entity';
+import { Order, OrderStatusEnum } from '../../modules/orders/entities/order.entity';
+import { OrderItem } from '../../modules/order-items/entities/order-item.entity';
 import { DataSource } from 'typeorm';
 
 async function seed() {

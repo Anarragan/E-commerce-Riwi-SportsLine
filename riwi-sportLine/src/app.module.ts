@@ -1,4 +1,3 @@
-import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import appConfig from './config/app.config';
@@ -10,6 +9,8 @@ import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { OrderItemsModule } from './modules/order-items/order-items.module';
 import { CustomersModule } from './modules/customers/customers.module';
+import { AuditMiddleware } from './common/middleware/audit.middleware';
+import { MiddlewareConsumer, NestModule, Module } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -31,4 +32,8 @@ import { CustomersModule } from './modules/customers/customers.module';
   ],
 })
 
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuditMiddleware).forRoutes('*');
+  }
+}
