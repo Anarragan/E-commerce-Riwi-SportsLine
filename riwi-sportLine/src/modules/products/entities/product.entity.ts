@@ -4,7 +4,7 @@ import { OrderItem } from "src/modules/order-items/entities/order-item.entity";
 @Entity('products')
 export class Product {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column()
   title: string;

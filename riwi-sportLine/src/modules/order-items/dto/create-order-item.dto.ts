@@ -8,15 +8,8 @@ export class CreateOrderItemDto {
   @IsNotEmpty({ message: 'The quantity is required' })
   quantity: number;
 
-  @IsNumber({}, { message: 'The price must be a number' })
-  @IsNotEmpty({ message: 'The price is required' })
-  price: number;
 
-  @IsNumberString({}, { message: 'The order ID must be a valid number string' })
-  @IsNotEmpty({ message: 'The order ID is required' })
-  orderId: string;
-
-  @IsNumberString({}, { message: 'The product ID must be a valid number string' })
+  @IsInt({ message: 'The product ID must be a valid number' })
   @IsNotEmpty({ message: 'The product ID is required' })
-  productId: string;
+  productId: number;
 }

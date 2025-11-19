@@ -24,13 +24,13 @@ export class ProductsService {
     return this.productRepository.find();
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.productRepository.findOne({ 
-      where: {id}
+      where: { id }
     });
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: UpdateProductDto) {
     const updateData = { ...updateProductDto } as any;
     if (updateData.price !== undefined) {
       updateData.price = (updateData.price);
@@ -39,7 +39,7 @@ export class ProductsService {
     return this.findOne(id);
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.productRepository.delete({ id });
   }
 }

@@ -24,10 +24,6 @@ export class CreateOrderDto {
   @IsNotEmpty({ message: 'El customerId es obligatorio' })
   customerId: number;
 
-  @IsOptional()
-  @IsNumber({}, { message: 'El total debe ser un número' })
-  total?: number;
-
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateOrderItemDto)

@@ -5,7 +5,7 @@ import { Order } from "../../orders/entities/order.entity";
 @Entity('customers')
 export class Customer {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ length: 100 })
   address: string;

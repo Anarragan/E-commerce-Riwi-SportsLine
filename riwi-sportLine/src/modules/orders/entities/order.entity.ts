@@ -2,7 +2,6 @@ import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedCol
 import { User } from "src/modules/users/entities/user.entity";
 import { Customer } from "src/modules/customers/entities/customer.entity";
 import { OrderItem } from "src/modules/order-items/entities/order-item.entity";
-import { truncate } from "fs";
 
 export enum OrderStatusEnum {
   PENDING = 'PENDING',
@@ -13,7 +12,7 @@ export enum OrderStatusEnum {
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({ type: 'enum', enum: OrderStatusEnum, default: OrderStatusEnum.PENDING })
   status: OrderStatusEnum;

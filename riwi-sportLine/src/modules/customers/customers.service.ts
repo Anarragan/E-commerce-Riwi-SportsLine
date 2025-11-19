@@ -10,10 +10,7 @@ export class CustomersService {
   constructor(@InjectRepository(Customer) private customerRepository: Repository<Customer>) {}
 
   create(createCustomerDto: CreateCustomerDto) {
-    const customer = this.customerRepository.create({
-      ...createCustomerDto,
-      user: { id: createCustomerDto.userId },
-    });
+    const customer = this.customerRepository.create(createCustomerDto);
     return this.customerRepository.save(customer);
   }
 
@@ -21,12 +18,12 @@ export class CustomersService {
     return this.customerRepository.find();
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.customerRepository.findOne({ 
       where: { id } });
   }
 
-  async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+  async update(id: number, updateCustomerDto: UpdateCustomerDto) {
     const updateCustomer = await this.customerRepository.preload({
       id,
       ...updateCustomerDto,
@@ -37,7 +34,7 @@ export class CustomersService {
     return this.customerRepository.save(updateCustomer);
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.customerRepository.delete({ id });
   }
 }

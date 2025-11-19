@@ -6,6 +6,7 @@ import { Order } from './entities/order.entity'
 import { OrderItem } from '../order-items/entities/order-item.entity';
 import { Product } from '../products/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class OrdersService {
@@ -22,7 +23,9 @@ export class OrdersService {
   let total = 0;
 
   for (const item of createOrderDto.orderItems) {
-    const product = await this.productRepository.findOne({ where: { id: item.productId } });
+    const product = await this.productRepository.findOne({ 
+      where: { id: item.productId }
+    });
     if (!product) continue;
 
     const orderItem = this.orderItemRepository.create({
@@ -47,24 +50,71 @@ export class OrdersService {
     return this.orderRepository.find();
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.orderRepository.findOne({
-      where: {id} 
+      where: { id }
+    });
+  }
+
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+  const order = await this.orderRepository.findOne({
+    where: { id },
+    relations: ['orderItems', 'orderItems.product'],
   });
+
+  if (!order) {
+    throw new NotFoundException(`Order #${id} not found`);
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto) {
-    const updateData: any = { ...updateOrderDto };
-
-    if (updateData.userId) updateData.userId;
-    if (updateData.customerId) updateData.customer;
-    if (updateData.orderItemsIds) updateData.orderItems;
-
-    await this.orderRepository.update({id}, updateData);
-    return this.findOne(id);
+  //update order fields
+  if (updateOrderDto.userId) {
+    order.user = { id: updateOrderDto.userId } as any;
   }
 
-  remove(id: string) {
-    return this.orderRepository.delete({id});
+  if (updateOrderDto.customerId) {
+    order.customer = { id: updateOrderDto.customerId } as any;
+  }
+
+  // Order items update
+  if (updateOrderDto.orderItems) {
+    await this.orderItemRepository.delete({ order: { id } });
+
+    // create and save new items
+    const newItems = await Promise.all(
+      updateOrderDto.orderItems.map(async (itemDto) => {
+        const product = await this.productRepository.findOne({
+          where: { id: Number(itemDto.productId) },
+        });
+
+        if (!product) {
+          throw new NotFoundException(`Product #${itemDto.productId} not found`);
+        }
+
+        const item = this.orderItemRepository.create({
+          quantity: itemDto.quantity,
+          price: product.price,
+          product,
+          order,
+        });
+
+        return this.orderItemRepository.save(item);
+      }),
+    );
+
+    order.orderItems = newItems;
+  }
+
+  // new total calculation
+  order.total = order.orderItems.reduce(
+    (acc, item) => acc + item.quantity * Number(item.price),
+    0,
+  );
+
+  await this.orderRepository.save(order);
+  return this.findOne(id);
+}
+
+  remove(id: number) {
+    return this.orderRepository.delete({ id });
   }
 }

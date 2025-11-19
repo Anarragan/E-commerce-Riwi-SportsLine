@@ -12,7 +12,6 @@ export class OrderItemsService {
   create(createOrderItemDto: CreateOrderItemDto) {
     const orderItem = this.orderItemRepository.create({
       ...createOrderItemDto,
-      order: { id: createOrderItemDto.orderId },
       product: { id: createOrderItemDto.productId },
     });
     return this.orderItemRepository.save(orderItem);
@@ -22,17 +21,16 @@ export class OrderItemsService {
     return this.orderItemRepository.find();
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.orderItemRepository.findOne({
       where: { id },
     });
   }
 
-  async update(id: string, updateOrderItemDto: UpdateOrderItemDto) {
+  async update(id: number, updateOrderItemDto: UpdateOrderItemDto) {
     const orderItem = await this.orderItemRepository.preload({
       id,
       ...updateOrderItemDto,
-      order: { id: updateOrderItemDto.orderId },
       product: { id: updateOrderItemDto.productId },
     });
     if (!orderItem) {
@@ -41,7 +39,7 @@ export class OrderItemsService {
     return this.orderItemRepository.save(orderItem);
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.orderItemRepository.delete({ id });
   }
 }

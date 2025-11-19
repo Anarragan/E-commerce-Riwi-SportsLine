@@ -15,6 +15,7 @@ export class CreateProductDto {
     @Type(() => Number)
     @IsNumber({ maxDecimalPlaces: 2 })
     @Min(0)
+    @IsNotEmpty({message: 'Price is required'})
     price: number;
 
     @Type(() => Number)
