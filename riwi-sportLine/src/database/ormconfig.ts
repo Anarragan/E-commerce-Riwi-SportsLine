@@ -5,6 +5,8 @@ import { Product } from 'src/modules/products/entities/product.entity';
 import { Order } from 'src/modules/orders/entities/order.entity';
 import { OrderItem } from 'src/modules/order-items/entities/order-item.entity';
 import { Customer } from 'src/modules/customers/entities/customer.entity';
+import { Role } from 'src/modules/roles/entities/role.entity';
+import { Permission } from 'src/modules/permissions/entities/permission.entity';
 
 export const getMongoConfig = async (
   configService: ConfigService,
@@ -15,6 +17,6 @@ export const getMongoConfig = async (
     username: configService.get<string>('DB_USERNAME'),
     password: configService.get<string>('DB_PASSWORD'),
     database: configService.get<string>('DB_NAME'),
-    entities: [User, Product, Order, OrderItem, Customer],
+    entities: [User, Product, Order, OrderItem, Customer, Role, Permission],
     synchronize: true,
 })

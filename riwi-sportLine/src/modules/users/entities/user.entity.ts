@@ -1,7 +1,8 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn, OneToOne, ManyToMany, JoinTable, OneToMany } from "typeorm";
 import { Customer } from "src/modules/customers/entities/customer.entity";
-import { Order } from "src/modules/orders/entities/order.entity";
+import { Role } from "../../roles/entities/role.entity";
 import { Exclude } from "class-transformer";
+import { Order } from "src/modules/orders/entities/order.entity";
 
 export enum UserRoleEnum {
   ADMIN = 'ADMIN',
@@ -23,8 +24,10 @@ export class User {
   @Exclude()
   password: string;
 
+  /*
   @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.CUSTOMER })
-  role: UserRoleEnum;
+  role: UserRoleEnum;*/
+
 
   @CreateDateColumn()
   createdAt: Date;
@@ -35,6 +38,10 @@ export class User {
   // Relations
   @OneToOne(() => Customer, (customer) => customer.user)
   customer?: Customer;
+
+  @ManyToMany(() => Role, role => role.users, { eager: true })
+  @JoinTable()
+  roles: Role[];
 
   @OneToMany(() => Order, (order) => order.user)
   orders?: Order[];
