@@ -15,7 +15,8 @@ export const AppDataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: [User, Client, Product, Order, OrderItem],
-  synchronize: true, // ⚠️ solo para desarrollo
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+  synchronize: false, // 🔴 importante: desactivar
   logging: true,
 });

@@ -1,129 +1,51 @@
-# PLAN_DE_MIGRACION.md - Proyecto Riwi SportsLine
-
-## Descripción general
+📄 PLAN_DE_MIGRACION.md - Proyecto Riwi SportsLine (Actualizado)
+Descripción general
 Migración del backend de Express a NestJS con enfoque modular, seguridad avanzada y buenas prácticas de arquitectura.
 
----
+Tabla de contenido
+Semana 1 - Fundamentos de NestJS y setup base
 
-## Tabla de contenido
-1. Semana 1 - Fundamentos de NestJS y setup base
-2. Semana 2 - ORM y persistencia con TypeORM
-3. Semana 3 - Arquitectura modular y DTOs
-4. Semana 4 - Middleware, filtros e interceptores
-5. Semana 5 - Autenticación con JWT, roles y permisos
-6. Semana 6 - Autenticaciones avanzadas (x-api-key y OAuth)
-7. Semana 7 - Pruebas y análisis estático
+Semana 2 - ORM y persistencia con TypeORM
 
----
+Semana 3 - Arquitectura modular y DTOs
 
-## Semana 1 - Fundamentos de NestJS y setup base
-**Descripción:** Migrar el proyecto Express a NestJS con configuración inicial.  
-**Criterios de aceptación:**
-- Proyecto creado con Nest CLI.
-- Configuración de TypeScript, ESLint, Prettier y `.env`.
-- Conexión PostgreSQL con TypeORM.
-- ConfigModule validando variables de entorno.
+Semana 4 - Middleware, filtros e interceptores
 
-**Tareas:**
-- Crear proyecto con `nest new riwi-sportsline`.
-- Configurar variables de entorno y migrar las de Express.
-- Sustituir Sequelize por TypeORM con entidad `Usuario`.
-- Documentar proceso en README.
+Semana 5 - Autenticación con JWT, roles y permisos
 
----
+Semana 6 - Autenticaciones avanzadas (x-api-key y OAuth)
 
-## Semana 2 - ORM y persistencia con TypeORM
-**Descripción:** Migrar modelos y relaciones a TypeORM.  
-**Criterios de aceptación:**
-- Entidades `Usuario`, `Producto`, `Cliente`, `Pedido`.
-- Relaciones definidas correctamente.
-- Migraciones y seeders implementados.
-- CRUD básico validado.
+Semana 7 - Pruebas y análisis estático
 
-**Tareas:**
-- Migrar modelos de Sequelize a TypeORM.
-- Configurar relaciones (OneToMany, ManyToOne).
-- Implementar migraciones y seeds iniciales.
-- Validar consultas desde servicios.
+Semana 5 - Autenticación con JWT, roles y permisos
+Descripción: Sistema de autenticación seguro con roles gestionados desde BD.
 
----
+Criterios de aceptación:
 
-## Semana 3 - Arquitectura modular y DTOs
-**Descripción:** Estructurar proyecto modular con controladores, servicios y DTOs.  
-**Criterios de aceptación:**
-- Módulos de usuarios, productos y clientes.
-- DTOs con `class-validator` y `class-transformer`.
-- Config robusta de `.env`.
-- Principios SOLID aplicados.
+JWT + Refresh Token funcional.
 
-**Tareas:**
-- Generar módulos, controladores y servicios.
-- Migrar DTOs de Express a Nest.
-- Centralizar configuración de entorno.
-- Actualizar controladores con inyección de dependencias.
-- Integrar pruebas unitarias.
+Roles y permisos gestionados desde BD.
 
----
+Guards y decoradores protegiendo endpoints.
 
-## Semana 4 - Middleware, filtros e interceptores
-**Descripción:** Mejorar robustez con middleware, filters, guards e interceptors.  
-**Criterios de aceptación:**
-- Middleware global de logging.
-- ExceptionFilter global.
-- Guards personalizados para roles.
-- Interceptors para formateo y tiempos.
+Swagger actualizado.
 
-**Tareas:**
-- Implementar middleware de auditoría.
-- Crear ExceptionFilter para errores HTTP.
-- Implementar Guards basados en roles.
-- Añadir interceptors personalizados.
-- Integrar pruebas unitarias.
+Tareas:
 
----
+✅ Configurar módulo Auth con Passport y JWT.
 
-## Semana 5 - Autenticación con JWT, roles y permisos
-**Descripción:** Sistema de autenticación seguro con roles desde BD.  
-**Criterios de aceptación:**
-- JWT + Refresh Token funcional.
-- Roles y permisos gestionados desde BD.
-- Guards y decoradores protegiendo endpoints.
-- Swagger actualizado.
+✅ Implementar AuthService con login y validación de credenciales.
 
-**Tareas:**
-- Configurar módulo Auth con Passport y JWT.
-- Migrar roles y permisos a BD.
-- Implementar guards y decoradores.
-- Documentar autenticación en Swagger.
+✅ Implementar AuthController con endpoint /auth/login.
 
----
+✅ Implementar JwtStrategy para validar tokens.
 
-## Semana 6 - Autenticaciones avanzadas
-**Descripción:** Integrar x-api-key y OAuth2.  
-**Criterios de aceptación:**
-- Autenticación por x-api-key.
-- OAuth2 con terceros (Google).
-- Validación de scopes y permisos.
-- Documentación en Swagger.
+✅ Integrar guards y decoradores (@Public, @Roles, JwtAuthGuard, RolesGuard).
 
-**Tareas:**
-- Crear módulo x-api-key.
-- Implementar OAuth2.
-- Validar scopes y permisos.
-- Documentar flujos en Swagger.
+✅ Migrar roles y permisos a BD con entidad Role.
 
----
+✅ Crear seeders de roles (admin, analyst) y usuarios iniciales con contraseñas encriptadas.
 
-## Semana 7 - Pruebas y análisis estático
-**Descripción:** Garantizar calidad y mantenibilidad.  
-**Criterios de aceptación:**
-- Swagger actualizado.
-- Pruebas de caja blanca y negra.
-- SonarQube configurado.
-- Linters y pre-commit hooks activos.
+🔄 Documentar autenticación en Swagger.
 
-**Tareas:**
-- Configurar SonarQube.
-- Implementar pruebas unitarias y de integración.
-- Configurar husky/pre-commit.
-- Validar calidad con linters.
+👉 Con esto, el context.md y el plan de migración ya reflejan el avance real hasta Semana 5. ¿Quieres que el siguiente paso sea que te prepare directamente la documentación Swagger de login, refresh y logout con ejemplos de los usuarios iniciales?

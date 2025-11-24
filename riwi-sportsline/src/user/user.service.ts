@@ -22,7 +22,7 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return this.userRepo.find({where:{id}});
+    return this.userRepo.findOneBy({id});
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
@@ -32,5 +32,10 @@ export class UserService {
 
   remove(id: number) {
     return this.userRepo.delete(id);
+  }
+
+  async findByEmail(email:string){
+    const user = await this.userRepo.findOne({where: {email}})
+    return user
   }
 }
