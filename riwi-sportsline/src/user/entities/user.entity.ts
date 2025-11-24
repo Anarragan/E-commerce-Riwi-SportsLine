@@ -1,5 +1,6 @@
+import { Role } from '../../roles/entities/role.entity';
 import { Order } from '../../order/entities/order.entity';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
 
 export enum UserRole {
   ADMIN = "admin",
@@ -20,12 +21,8 @@ export class User {
   @Column()
   password: string;
 
-  @Column({
-    type: 'enum',
-    enum: UserRole,
-    default: UserRole.ANALYST,
-  })
-  role: UserRole;
+  @ManyToOne(() => Role, (role) => role.users, { eager: true })
+  role:Role;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
