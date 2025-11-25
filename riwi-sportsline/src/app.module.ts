@@ -19,6 +19,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { RolesModule } from './roles/roles.module';
+import { Role } from './roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { RolesModule } from './roles/roles.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [User, Client, Order, OrderItem, Product],
+      entities: [User, Client, Order, OrderItem, Product, Role],
       synchronize: true,
 
     }),
