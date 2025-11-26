@@ -20,6 +20,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/entities/role.entity';
+import { ExternalModule } from './external/external.module';
 
 @Module({
   imports: [
@@ -44,14 +45,11 @@ import { Role } from './roles/entities/role.entity';
     OrderModule,
     OrderItemModule,
     AuthModule,
-    RolesModule
+    RolesModule,
+    ExternalModule,
   ],
   controllers: [AppController],
-  providers: [
-    { provide: APP_GUARD, useClass: JwtAuthGuard },
-    { provide: APP_GUARD, useClass: RolesGuard },
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule implements NestModule{ 
   configure(consumer: MiddlewareConsumer) {

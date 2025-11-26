@@ -65,4 +65,21 @@ export class UserService {
     }
     return user;
   }
+
+  async createGoogleUser(email: string, name: string):Promise<User> {
+    const defaultRole = await this.roleRepo.findOne({where: { name: "analyst"}})
+
+    if (!defaultRole) {
+      throw new NotFoundException("El rol por defecto no existe en la DB")
+    }
+
+    const user = this.userRepo.create({
+      name,
+      email,
+      password: "",
+      role: defaultRole,
+    })
+
+    return this.userRepo.save(user);
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -20,12 +21,12 @@ export class AuthService {
       console.log("password valida")
       return user
     } else {
-      console.log("invalida") 
+      console.log("invalida")
       return null;
-       
+
     }
 
-    
+
   }
 
   async login(email: string, password: string) {
@@ -33,8 +34,8 @@ export class AuthService {
     if (!user) throw new UnauthorizedException("Invalid Credentials");
 
     const payload = { sub: user.id, role: user.role, email: user.email };
-    const accessToken = await this.jwtService.sign(payload, {expiresIn: "15m"});
-    const refreshToken = await this.jwtService.sign(payload, {expiresIn: "7d"});
+    const accessToken = await this.jwtService.sign(payload, { expiresIn: "15m" });
+    const refreshToken = await this.jwtService.sign(payload, { expiresIn: "7d" });
     return { accessToken, refreshToken };
   }
 
@@ -45,14 +46,41 @@ export class AuthService {
 
       if (!user) throw new UnauthorizedException("invalid refresh token");
 
-      const newAccessToken =  this.jwtService.sign(
-        {sub: user.id, role: user.role, email: user.email},
-        {expiresIn: "15m"},
+      const newAccessToken = this.jwtService.sign(
+        { sub: user.id, role: user.role, email: user.email },
+        { expiresIn: "15m" },
       );
 
-      return {accessToken: newAccessToken};
+      return { accessToken: newAccessToken };
     } catch {
       throw new UnauthorizedException("Invalid refresh token")
     }
+  }
+
+  async loginWithGoogle(googleUser: { email: string, name: string }) {
+    let user: User;
+
+    try {
+      user = await this.usersService.findByEmail(googleUser.email)
+    } catch {
+      user = await this.usersService.createGoogleUser(googleUser.email, googleUser.name)
+    }
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role.name,
+    }
+
+    const accessToken = await this.jwtService.sign(payload, { 
+      secret: process.env.JWT_SECRET,
+      expiresIn: "15m",
+    });
+    const refreshToken = await this.jwtService.sign(payload, { 
+      secret: process.env.JWT_SECRET,
+      expiresIn: "7d", 
+    });
+
+    return { accessToken, refreshToken };
   }
 }

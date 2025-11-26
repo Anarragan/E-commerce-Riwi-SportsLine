@@ -1,51 +1,38 @@
-📄 PLAN_DE_MIGRACION.md - Proyecto Riwi SportsLine (Actualizado)
-Descripción general
-Migración del backend de Express a NestJS con enfoque modular, seguridad avanzada y buenas prácticas de arquitectura.
-
-Tabla de contenido
-Semana 1 - Fundamentos de NestJS y setup base
-
-Semana 2 - ORM y persistencia con TypeORM
-
-Semana 3 - Arquitectura modular y DTOs
-
-Semana 4 - Middleware, filtros e interceptores
-
-Semana 5 - Autenticación con JWT, roles y permisos
-
-Semana 6 - Autenticaciones avanzadas (x-api-key y OAuth)
-
-Semana 7 - Pruebas y análisis estático
-
-Semana 5 - Autenticación con JWT, roles y permisos
-Descripción: Sistema de autenticación seguro con roles gestionados desde BD.
+📄 plan.md — PLAN_DE_MIGRACION.md (Actualizado hasta Semana 7)
+Semana 7 - Historia de Usuario: Pruebas y análisis estático
+Descripción: Como líder técnico necesito asegurar la calidad y mantenibilidad del código con Swagger, SonarQube y linters.
 
 Criterios de aceptación:
 
-JWT + Refresh Token funcional.
+Swagger actualizado y documentando DTOs, respuestas y errores (Obligatorio).
 
-Roles y permisos gestionados desde BD.
+Pruebas de caja blanca y negra (WorkShop - Aplicación).
 
-Guards y decoradores protegiendo endpoints.
+Análisis de calidad con SonarQube (WorkShop - Aplicación).
 
-Swagger actualizado.
+Configuración de linters y pre-commit hooks (WorkShop - Aplicación).
 
 Tareas:
 
-✅ Configurar módulo Auth con Passport y JWT.
+✅ Configurar análisis de código estático con SonarQube.
 
-✅ Implementar AuthService con login y validación de credenciales.
+✅ Documentar DTOs, respuestas y errores en Swagger.
 
-✅ Implementar AuthController con endpoint /auth/login.
+✅ Implementar pruebas unitarias (caja blanca) e integración (caja negra).
 
-✅ Implementar JwtStrategy para validar tokens.
+✅ Configurar ESLint y Prettier para análisis estático.
 
-✅ Integrar guards y decoradores (@Public, @Roles, JwtAuthGuard, RolesGuard).
+✅ Implementar Husky + lint-staged para validaciones en pre-commit.
 
-✅ Migrar roles y permisos a BD con entidad Role.
+🔄 Documentar resultados de pruebas y cobertura mínima del 80%.
 
-✅ Crear seeders de roles (admin, analyst) y usuarios iniciales con contraseñas encriptadas.
+🎯 Resultado esperado de Semana 7
+Swagger completo y actualizado.
 
-🔄 Documentar autenticación en Swagger.
+Pruebas unitarias e integración ejecutables con Jest y Supertest.
 
-👉 Con esto, el context.md y el plan de migración ya reflejan el avance real hasta Semana 5. ¿Quieres que el siguiente paso sea que te prepare directamente la documentación Swagger de login, refresh y logout con ejemplos de los usuarios iniciales?
+SonarQube corriendo y mostrando métricas de calidad.
+
+Linters configurados y hooks de pre-commit activos.
+
+Flujo de CI/CD listo para validar calidad antes de despliegues.
