@@ -1,101 +1,43 @@
-📌 Contexto del Proyecto: E-commerce Riwi SportsLine (Actualizado)
+📌 context.md — Proyecto Riwi SportsLine (Actualizado hasta Semana 7)
 🎯 Objetivo General
 Migrar el backend de Express a NestJS con TypeORM, implementando arquitectura modular, configuración robusta y buenas prácticas de documentación y validación. El sistema debe ser escalable, mantenible y seguro, con soporte para usuarios, clientes, productos, órdenes y sus items.
 
 🗂️ Estado del Proyecto
 ✅ Semana 1
-Configuración inicial del proyecto NestJS.
-
-Dependencias principales instaladas (@nestjs/typeorm, pg, class-validator, class-transformer).
-
-Estructura de carpetas definida (src/user, src/client, src/product, src/order, src/order_item, src/seeds).
-
-Conexión a PostgreSQL con variables de entorno.
+Setup inicial de NestJS, dependencias, estructura de carpetas y conexión a PostgreSQL.
 
 ✅ Semana 2
-Entidades migradas a TypeORM (User, Client, Product, Order, OrderItem).
-
-Relaciones definidas correctamente.
-
-Seeders implementados y probados.
-
-Script de ejecución de seeders configurado en package.json.
-
-Validación en BD con consultas SQL y flujo completo probado.
+Migración de entidades a TypeORM, relaciones, seeders y validación en BD.
 
 ✅ Semana 3
-Recursos generados con nest g resource para usuarios, productos, clientes, órdenes y order-items.
-
-DTOs con validaciones (class-validator).
-
-Servicios conectados a repositorios TypeORM.
-
-Controladores REST con endpoints CRUD.
-
-Validación completa en Swagger/Postman.
+Generación de recursos con nest g resource, DTOs con validaciones, servicios conectados a repositorios y controladores CRUD.
 
 ✅ Semana 4
-Guards personalizados (JwtAuthGuard) implementados.
-
-Decorador @Public creado.
-
-Decorador @Roles y RolesGuard implementados.
-
-ResponseInterceptor global implementado.
-
-TimingInterceptor global implementado.
-
-AllExceptionsFilter global implementado.
-
-LoggerMiddleware global implementado para auditoría.
+Implementación de guards, decoradores, interceptores, filtros y middleware globales.
 
 ✅ Semana 5
-Módulo Auth configurado con Passport y JWT.
+Módulo Auth con JWT, refresh token con cookies HttpOnly, logout seguro, roles en BD y seeders iniciales.
 
-AuthService con login y validación de credenciales.
+✅ Semana 6
+Integración de Google OAuth 2.0 con Passport, endpoints /auth/google y /auth/google/callback, creación automática de usuarios externos y emisión de tokens.
 
-AuthController con endpoint /auth/login.
+🔄 Semana 7 (en curso)
+Historia de Usuario: Como líder técnico necesito asegurar la calidad y mantenibilidad del código con Swagger, SonarQube y linters.
 
-JwtStrategy implementada.
+Criterios de aceptación:
 
-Guards y decoradores funcionando.
+Swagger actualizado y documentando DTOs, respuestas y errores (Obligatorio).
 
-Refresh Token implementado con cookies HttpOnly.
+Pruebas de caja blanca y negra (WorkShop - Aplicación).
 
-Logout seguro implementado (limpieza de cookie refreshToken).
+Análisis de calidad con SonarQube (WorkShop - Aplicación).
 
-Roles migrados a BD con entidad Role y relación FK en users.
+Configuración de linters y pre-commit hooks (WorkShop - Aplicación).
 
-Seeders de roles (admin, analyst) y usuarios iniciales creados con contraseñas encriptadas.
+Tareas base de migración:
 
-Flujo completo de seeders funcionando (roles, users, clients, products, orders, order_items).
+Configurar análisis de código estático con SonarQube.
 
-🔄 Pendiente:
+Realizar pruebas unitarias (caja blanca) e integración (caja negra).
 
-Documentación en Swagger (login, refresh, logout, roles).
-
-Pruebas unitarias e integración del flujo de autenticación y roles.
-
-📅 Próximos pasos
-Documentar flujo completo en Swagger (login, refresh, logout, roles).
-
-Avanzar hacia autenticaciones avanzadas (Semana 6: x-api-key y OAuth).
-
-Configurar pruebas unitarias, integración y análisis estático (Semana 7).
-
-📝 Notas
-Seeders son idempotentes gracias a TRUNCATE ... CASCADE.
-
-BD lista para ser consumida por servicios y controladores.
-
-Autenticación JWT y autorización por roles ya implementadas.
-
-Refresh Token funcionando con cookies HttpOnly.
-
-Logout seguro completado.
-
-Middleware, filtros e interceptores globales completados.
-
-Roles gestionados desde BD con entidad Role.
-
-Usuarios iniciales creados (admin@example.com, analyst@example.com) para pruebas de login.
+Implementar Husky/pre-commit para control de calidad.
