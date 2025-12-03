@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
-import { API_REQUIRED_KEY } from "src/common/decorators/api-key.decorator";
+import { API_REQUIRED_KEY } from "../../common/decorators/api-key.decorator";
 
 @Injectable()
 export class ApiKeyGuard implements CanActivate {
