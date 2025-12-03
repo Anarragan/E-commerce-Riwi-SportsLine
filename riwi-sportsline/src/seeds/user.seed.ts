@@ -32,6 +32,12 @@ export async function seedUsers(dataSource: DataSource) {
       password: await bcrypt.hash("analyst123", 10),
       role: analystRole, // ✅ objeto Role
     },
+    {
+      name: "Test User",
+      email: "test@example.com", // 👈 el que usan tus tests
+      password: await bcrypt.hash("123456", 10),
+      role: analystRole, // 👈 asigna un rol válido
+    },
   ];
 
   await userRepo.save(users);

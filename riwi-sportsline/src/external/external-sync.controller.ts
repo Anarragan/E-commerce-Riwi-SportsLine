@@ -1,8 +1,8 @@
 // src/external/external-sync.controller.ts
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { ApiKey } from 'src/common/decorators/api-key.decorator';
-import { ApiKeyGuard } from 'src/auth/guards/api-key.guard';
+import { ApiKey } from '../common/decorators/api-key.decorator';
+import { ApiKeyGuard } from '../auth/guards/api-key.guard';
 
 @ApiTags('external-sync')
 @UseGuards(ApiKeyGuard)

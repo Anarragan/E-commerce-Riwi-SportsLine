@@ -30,7 +30,7 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalInterceptors(new TimingInterceptor());
-  app.use(cookieParser())
+  app.use(cookieParser());
 
   await app.listen(port);
   console.log('Swagger UI: http://localhost:3000/api');
