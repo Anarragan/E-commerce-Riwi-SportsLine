@@ -1,5 +1,15 @@
-import { Entity, ObjectIdColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { ObjectId } from "mongodb";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { User } from 'src/modules/users/entities/user.entity';
+import { Customer } from 'src/modules/customers/entities/customer.entity';
+import { OrderItem } from 'src/modules/order-items/entities/order-item.entity';
 
 export enum OrderStatusEnum {
   PENDING = 'PENDING',
@@ -9,13 +19,17 @@ export enum OrderStatusEnum {
 
 @Entity('orders')
 export class Order {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column({ type: 'enum', enum: OrderStatusEnum, default: OrderStatusEnum.PENDING })
+  @Column({
+    type: 'enum',
+    enum: OrderStatusEnum,
+    default: OrderStatusEnum.PENDING,
+  })
   status: OrderStatusEnum;
 
-  @Column()
+  @Column({ type: 'numeric' })
   total: number;
 
   @CreateDateColumn()
@@ -25,12 +39,12 @@ export class Order {
   updatedAt: Date;
 
   // Relations
-  @Column()
-  userId: ObjectId;
+  @ManyToOne(() => User, (user) => user.orders)
+  user: User;
 
-  @Column()
-  customerId: ObjectId;
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  customer: Customer;
 
-  @Column()
-  orderItems: ObjectId[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.order, { cascade: true })
+  orderItems: OrderItem[];
 }

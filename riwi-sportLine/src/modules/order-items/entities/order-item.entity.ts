@@ -1,21 +1,24 @@
-import { Entity, Column, ObjectIdColumn } from "typeorm";
-import { ObjectId } from "mongodb";
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from "typeorm";
+import { Order } from "src/modules/orders/entities/order.entity";
+import { Product } from "src/modules/products/entities/product.entity";
 
 @Entity('order_items')
 export class OrderItem {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @Column()
+  @Column({ type: 'int' })
   quantity: number;
 
-  @Column()
+  @Column({ type: 'numeric' })
   price: number;
 
   //Relations
-  @Column()
-  orderId: ObjectId;
+  @ManyToOne(() => Order, (order) => order.orderItems, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'orderId' })
+  order: Order;
 
-  @Column()
-  productId: ObjectId;
+  @ManyToOne(() => Product, (product) => product.orderItems)
+  @JoinColumn({ name: 'productId' })
+  product: Product;
 }

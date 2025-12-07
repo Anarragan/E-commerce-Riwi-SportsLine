@@ -1,16 +1,21 @@
-import { Column, CreateDateColumn, UpdateDateColumn, Entity, ObjectIdColumn } from "typeorm";
-import { Exclude } from "class-transformer";
-import { ObjectId } from "mongodb";
-
-export enum UserRoleEnum {
-  ADMIN = 'ADMIN',
-  CUSTOMER = 'CUSTOMER',
-}
+import {
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  OneToMany,
+} from 'typeorm';
+import { Customer } from '../../customers/entities/customer.entity';
+import { Order } from '../../orders/entities/order.entity';
+import { UsersRole } from '../../users-roles/entities/users-role.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ length: 100 })
   name: string;
@@ -22,9 +27,6 @@ export class User {
   @Exclude()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRoleEnum, default: UserRoleEnum.CUSTOMER })
-  role: UserRoleEnum;
-
   @CreateDateColumn()
   createdAt: Date;
 
@@ -32,10 +34,12 @@ export class User {
   updatedAt: Date;
 
   // Relations
-  @Column()
-  customerId?: ObjectId;
+  @OneToOne(() => Customer, (customer) => customer.user)
+  customer?: Customer;
 
-  @Column({ default: [] })
-  orderIds: ObjectId[];
+  @OneToMany(() => UsersRole, (ur) => ur.user)
+  roles: UsersRole[];
 
+  @OneToMany(() => Order, (order) => order.user)
+  orders?: Order[];
 }

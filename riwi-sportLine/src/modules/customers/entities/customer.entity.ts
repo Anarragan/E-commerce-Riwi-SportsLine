@@ -1,12 +1,11 @@
-import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, OneToOne, JoinColumn, ObjectIdColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, Entity, OneToOne, JoinColumn } from "typeorm";
 import { User } from "../../users/entities/user.entity";
 import { Order } from "../../orders/entities/order.entity";
-import { ObjectId } from "mongodb";
 
 @Entity('customers')
 export class Customer {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ length: 100 })
   address: string;
@@ -22,10 +21,11 @@ export class Customer {
 
   // Relations
 
-  @Column()
-  userId: ObjectId;
+  @OneToOne(() => User, (user) => user.customer, { cascade: true })
+  @JoinColumn()
+  user: User;
 
-  @Column()
-  orders: ObjectId[];
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order[];
 }
 

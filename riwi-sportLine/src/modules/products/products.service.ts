@@ -1,10 +1,9 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
-import { Product } from "./entities/product.entity";
-import { ObjectId } from "mongodb";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductsService {
@@ -16,7 +15,7 @@ export class ProductsService {
   create(createProductDto: CreateProductDto) {
     const product = this.productRepository.create({
       ...createProductDto,
-      price: (createProductDto.price),
+      price: createProductDto.price,
     });
     return this.productRepository.save(product);
   }
@@ -25,25 +24,19 @@ export class ProductsService {
     return this.productRepository.find();
   }
 
-  findOne(id: string) {
-    return this.productRepository.findOne({ 
-      where: {id: new ObjectId(id) }
+  findOne(id: number) {
+    return this.productRepository.findOne({
+      where: { id },
     });
   }
 
-  async update(id: string, updateProductDto: UpdateProductDto) {
-    const updateData = { ...updateProductDto } as any;
-    if (updateData.price !== undefined) {
-      updateData.price = (updateData.price);
-    }
-    await this.productRepository.update({
-      id: new ObjectId(id)}, 
-      updateData,
-    );
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const updateData: Partial<Product> = { ...updateProductDto };
+    await this.productRepository.update({ id }, updateData);
     return this.findOne(id);
   }
 
-  remove(id: string) {
-    return this.productRepository.delete({ id: new ObjectId(id) });
+  remove(id: number) {
+    return this.productRepository.delete({ id });
   }
 }

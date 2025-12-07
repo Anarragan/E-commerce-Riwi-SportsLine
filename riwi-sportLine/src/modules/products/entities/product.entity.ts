@@ -1,10 +1,17 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, ObjectIdColumn } from "typeorm";
-import { ObjectId } from "mongodb";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { OrderItem } from 'src/modules/order-items/entities/order-item.entity';
 
 @Entity('products')
 export class Product {
-  @ObjectIdColumn()
-  id: ObjectId;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   title: string;
@@ -12,7 +19,7 @@ export class Product {
   @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ type: 'numeric' })
   price: number;
 
   @Column({ default: 0 })
@@ -25,6 +32,6 @@ export class Product {
   updatedAt: Date;
 
   // Relations
-  @Column({type: 'array', nullable: true})
-  orderItems: ObjectId[];
+  @OneToMany(() => OrderItem, (orderItem) => orderItem.product)
+  orderItems: OrderItem[];
 }
