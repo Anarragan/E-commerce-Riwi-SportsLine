@@ -7,7 +7,10 @@ import { OrderItem } from './entities/order-item.entity';
 
 @Injectable()
 export class OrderItemsService {
-  constructor(@InjectRepository(OrderItem) private orderItemRepository: Repository<OrderItem>) {}
+  constructor(
+    @InjectRepository(OrderItem)
+    private orderItemRepository: Repository<OrderItem>,
+  ) {}
 
   create(createOrderItemDto: CreateOrderItemDto) {
     const orderItem = this.orderItemRepository.create({

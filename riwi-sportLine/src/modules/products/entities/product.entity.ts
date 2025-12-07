@@ -1,5 +1,12 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { OrderItem } from "src/modules/order-items/entities/order-item.entity";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { OrderItem } from 'src/modules/order-items/entities/order-item.entity';
 
 @Entity('products')
 export class Product {

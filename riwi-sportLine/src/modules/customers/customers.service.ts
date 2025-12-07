@@ -7,7 +7,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class CustomersService {
-  constructor(@InjectRepository(Customer) private customerRepository: Repository<Customer>) {}
+  constructor(
+    @InjectRepository(Customer)
+    private customerRepository: Repository<Customer>,
+  ) {}
 
   create(createCustomerDto: CreateCustomerDto) {
     const customer = this.customerRepository.create(createCustomerDto);
@@ -19,8 +22,9 @@ export class CustomersService {
   }
 
   findOne(id: number) {
-    return this.customerRepository.findOne({ 
-      where: { id } });
+    return this.customerRepository.findOne({
+      where: { id },
+    });
   }
 
   async update(id: number, updateCustomerDto: UpdateCustomerDto) {

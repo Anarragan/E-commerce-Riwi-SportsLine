@@ -1,19 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, ManyToMany, Column, JoinTable } from "typeorm";
-import { User } from "../../users/entities/user.entity";
-import { Permission } from "../../permissions/entities/permission.entity";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { RolesPermission } from 'src/modules/roles-permissions/entities/roles-permission.entity';
+import { UsersRole } from 'src/modules/users-roles/entities/users-role.entity';
 
 @Entity()
 export class Role {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ unique: true })
-    name: string;
+  @Column({ unique: true })
+  name: string;
 
-    @ManyToMany(() => Permission, (permission) => permission.roles)
-    @JoinTable()
-    permissions: Permission[];
+  @OneToMany(() => RolesPermission, (rp) => rp.role)
+  permissions: RolesPermission[];
 
-    @ManyToMany(() => User, (user) => user.roles)
-    users: User[];
+  @OneToMany(() => UsersRole, (userRole) => userRole.role)
+  users: UsersRole[];
 }

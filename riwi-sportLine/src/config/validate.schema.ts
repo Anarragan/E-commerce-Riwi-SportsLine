@@ -9,7 +9,10 @@ export const validateEnv = (config: Record<string, unknown>) => {
     DB_PASSWORD: Joi.string().required(),
     DB_NAME: Joi.string().required(),
   });
-  const { error, value } = schema.validate(config, { allowUnknown: true });
-  if (error) throw new Error(`Config validation error: ${error.message}`);
-  return value;
+  const result = schema.validate(config, {
+    allowUnknown: true,
+  }) as Joi.ValidationResult<Record<string, unknown>>;
+  if (result.error)
+    throw new Error(`Config validation error: ${result.error.message}`);
+  return result.value;
 };

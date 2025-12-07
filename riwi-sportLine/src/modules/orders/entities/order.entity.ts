@@ -1,7 +1,15 @@
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
-import { User } from "src/modules/users/entities/user.entity";
-import { Customer } from "src/modules/customers/entities/customer.entity";
-import { OrderItem } from "src/modules/order-items/entities/order-item.entity";
+import {
+  Entity,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { User } from 'src/modules/users/entities/user.entity';
+import { Customer } from 'src/modules/customers/entities/customer.entity';
+import { OrderItem } from 'src/modules/order-items/entities/order-item.entity';
 
 export enum OrderStatusEnum {
   PENDING = 'PENDING',
@@ -14,7 +22,11 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'enum', enum: OrderStatusEnum, default: OrderStatusEnum.PENDING })
+  @Column({
+    type: 'enum',
+    enum: OrderStatusEnum,
+    default: OrderStatusEnum.PENDING,
+  })
   status: OrderStatusEnum;
 
   @Column({ type: 'numeric' })
